@@ -1,0 +1,29 @@
+services:
+  web:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+    depends_on:
+      - api
+    ports:
+      - "${WEB_PORT:-8084}:80"
+
+  api:
+    restart: unless-stopped
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3000
+      DATABASE_FILE: /data/leads.db
+      SENHA_RELATORIO: ${SENHA_RELATORIO:-}
+    volumes:
+      - lead_data:/data
+    expose:
+      - "3000"
+
+volumes:
+  lead_data:

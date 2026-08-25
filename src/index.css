@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+html, body {
+  touch-action: pan-x pan-y;
+}
+
+#root {
+  height: 100vh;
+  
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  display: inline-block;
+  min-width: 100%;
+  animation: marquee 20s linear infinite;
+}
+
+/* ---- Slot machine ---- */
+@keyframes slot-glow {
+  0%, 100% { opacity: .45; }
+  50%      { opacity: 1; }
+}
+
+@keyframes slot-win-flash {
+  0%, 100% { opacity: .15; }
+  50%      { opacity: .9; }
+}
+
+/* ---- Sliders do painel admin ---- */
+.slot-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slot-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #67e8f9;
+}
+
+.slot-range::-moz-range-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 7px solid #67e8f9;
+}
+
+@keyframes slot-shine {
+  0%   { transform: translateX(-120%) skewX(-18deg); }
+  100% { transform: translateX(320%) skewX(-18deg); }
+}
+
+/* ---- Teclado virtual do totem ----
+   Seletor com especificidade alta de proposito: o CSS do react-simple-keyboard
+   e importado depois deste arquivo e venceria em caso de empate. */
+.hg-theme-default.totem-kb {
+  background: transparent;
+  padding: 0;
+}
+
+.hg-theme-default.totem-kb .hg-row .hg-button {
+  height: 78px;
+  font-size: 30px;
+  font-weight: 600;
+  border-radius: 12px;
+  /* cor explicita: dentro do modal admin o texto herdaria o branco do container */
+  color: #1f2937;
+  background: #ffffff;
+}
+
+.hg-theme-default.totem-kb .hg-row .hg-button[data-skbtn="{shift}"],
+.hg-theme-default.totem-kb .hg-row .hg-button[data-skbtn="{backspace}"],
+.hg-theme-default.totem-kb .hg-row .hg-button[data-skbtn="{space}"] {
+  font-size: 22px;
+  flex-grow: 2.5;
+  white-space: nowrap;
+}
+
+/* Teclado numerico (CPF) */
+.hg-theme-default.totem-kb-numeric .hg-row .hg-button {
+  height: 120px;
+  max-width: 240px;
+  font-size: 52px;
+}
+
+.hg-theme-default.totem-kb-numeric .hg-row {
+  justify-content: center;
+}
+
+.hg-theme-default.totem-kb-numeric .hg-row .hg-button[data-skbtn="{backspace}"] {
+  font-size: 28px;
+  max-width: 500px;
+}
+
+/* Teclado menor, usado no modal de acesso admin */
+.hg-theme-default.totem-kb-mini .hg-row {
+  gap: 8px;
+}
+
+.hg-theme-default.totem-kb-mini .hg-row:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.hg-theme-default.totem-kb-mini .hg-row .hg-button {
+  height: 52px;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.hg-theme-default.totem-kb-mini .hg-row .hg-button[data-skbtn="{shift}"],
+.hg-theme-default.totem-kb-mini .hg-row .hg-button[data-skbtn="{backspace}"] {
+  font-size: 20px;
+  flex-grow: 1.4;
+}
