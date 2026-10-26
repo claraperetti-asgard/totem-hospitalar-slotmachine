@@ -60,7 +60,7 @@ export default function AcessoAdmin({ settings, onSave, onClose }: Props) {
                         Painel do Administrador
                     </h1>
                     <p className="text-white/60 text-2xl">
-                        Configurações da Slot Machine
+                        Configurações do Plinko
                     </p>
                 </div>
 
@@ -73,7 +73,7 @@ export default function AcessoAdmin({ settings, onSave, onClose }: Props) {
                                     Tentativas por pessoa
                                 </h2>
                                 <p className="text-white/60 text-xl">
-                                    Quantos giros cada participante pode dar.
+                                    Quantas jogadas cada participante pode fazer.
                                 </p>
                             </div>
 
@@ -133,7 +133,7 @@ export default function AcessoAdmin({ settings, onSave, onClose }: Props) {
                             <div>
                                 <h2 className="text-3xl font-bold">Chance de ganhar</h2>
                                 <p className="text-white/60 text-xl">
-                                    Porcentagem de acerto em cada giro.
+                                    Chance da bola cair na logo da Hospitalar em cada jogada.
                                 </p>
                             </div>
 

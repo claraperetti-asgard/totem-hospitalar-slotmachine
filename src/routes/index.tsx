@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import AppLayout from "../components/layout/AppLayout";
 import Home from "../pages/Home";
-import Formulario from "../pages/Formulario";
+import Instagram from "../pages/Instagram";
 import Relatorio from "../pages/Relatorio";
 import Roleta from "../pages/Roleta";
 import SlotMachine from "../pages/SlotMachine";
@@ -69,7 +69,7 @@ export function AppRoutes() {
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/forms" element={<Formulario />} />
+        <Route path="/instagram" element={<Instagram />} />
         <Route path="/relatorio" element={<Relatorio />} />
         <Route path="/roleta" element={<Roleta />} />
         <Route path="/slot-machine" element={<SlotMachine />} />

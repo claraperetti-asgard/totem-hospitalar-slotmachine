@@ -1,13 +1,9 @@
 import { useRef, useState } from "react";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import LogoHospitalar from "../assets/logo-hospitalar-branco.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import AcessoAdmin from "../components/layout/AcessoAdmin";
 import {
-    ADMIN_PASSWORD,
-    ADMIN_USER,
     loadGameSettings,
-    saveGameSettings,
     type GameSettings,
 } from "../config/gameSettings";
 
@@ -31,16 +27,10 @@ const centerPos = (t: number) => (t - 1 + L) % L;
 const SPIN_MS = [2200, 2800, 3400];
 
 export default function SlotMachine() {
-    // tentativas e chance de vitória são configuradas no painel admin
-    const [settings, setSettings] = useState<GameSettings>(() => loadGameSettings());
+    // tentativas e chance de vitória vêm do painel admin (tela do formulário)
+    const [settings] = useState<GameSettings>(() => loadGameSettings());
     const MAX_ATTEMPTS = settings.maxAttempts;
     const WIN_CHANCE = settings.winChance;
-
-    const [adminOpen, setAdminOpen] = useState(false);
-    const [loginOpen, setLoginOpen] = useState(false);
-    const [loginUser, setLoginUser] = useState("");
-    const [loginPassword, setLoginPassword] = useState("");
-    const [loginError, setLoginError] = useState("");
 
     const [positions, setPositions] = useState([
         centerPos(0),
@@ -134,36 +124,6 @@ export default function SlotMachine() {
             setMessage(`Tentativa ${newAttempts}/${MAX_ATTEMPTS}`);
             setSpinning(false);
         }, SPIN_MS[SPIN_MS.length - 1] + 150);
-    };
-
-    const openLogin = () => {
-        setLoginUser("");
-        setLoginPassword("");
-        setLoginError("");
-        setLoginOpen(true);
-    };
-
-    const handleLogin = () => {
-        if (
-            loginUser.trim().toLowerCase() === ADMIN_USER &&
-            loginPassword === ADMIN_PASSWORD
-        ) {
-            setLoginOpen(false);
-            setAdminOpen(true);
-            return;
-        }
-
-        setLoginError("Usuário ou senha inválidos");
-    };
-
-    const handleSaveSettings = (next: GameSettings) => {
-        // saveGameSettings devolve os valores já validados
-        setSettings(saveGameSettings(next));
-
-        // reinicia o jogo com as novas regras
-        setAttempts(0);
-        setMessage("");
-        setWon(false);
     };
 
     return (
@@ -311,70 +271,6 @@ export default function SlotMachine() {
                 </h1>
             </div>
 
-            <button
-                onClick={openLogin}
-                className="ml-200 mt-35 px-8 py-2 bg-[#7191bd] text-black text-xm font-bold rounded-full"
-            >
-            Acesso Admin
-            </button>
-
-            {/* ---------- MODAL DE LOGIN ---------- */}
-            {loginOpen && (
-                <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 px-8">
-                    <div className="relative w-full max-w-2xl rounded-3xl bg-[#045291] border border-white/20 p-10 space-y-8 shadow-[0_30px_70px_rgba(0,0,0,0.5)]">
-                        <button
-                            onClick={() => setLoginOpen(false)}
-                            className="absolute right-6 top-6 bg-white/10 border border-white/20 p-2 rounded-full"
-                        >
-                            <X color="#ffffff" size={28} />
-                        </button>
-
-                        <h2 className="text-4xl font-black">Acesso Admin</h2>
-
-                        <div className="space-y-3">
-                            <label className="block text-2xl font-bold">Usuário</label>
-                            <input
-                                value={loginUser}
-                                onChange={(e) => setLoginUser(e.target.value)}
-                                className="w-full bg-white text-[#045291] text-3xl font-bold rounded-2xl px-6 py-4 outline-none"
-                            />
-                        </div>
-
-                        <div className="space-y-3">
-                            <label className="block text-2xl font-bold">Senha</label>
-                            <input
-                                type="password"
-                                value={loginPassword}
-                                onChange={(e) => setLoginPassword(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") handleLogin();
-                                }}
-                                className="w-full bg-white text-[#045291] text-3xl font-bold rounded-2xl px-6 py-4 outline-none"
-                            />
-                        </div>
-
-                        {loginError && (
-                            <p className="text-red-300 text-xl font-bold">{loginError}</p>
-                        )}
-
-                        <button
-                            onClick={handleLogin}
-                            className="w-full px-12 py-4 bg-white text-[#045291] text-3xl font-black rounded-full"
-                        >
-                            Entrar
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* ---------- PAINEL ADMIN ---------- */}
-            {adminOpen && (
-                <AcessoAdmin
-                    settings={settings}
-                    onSave={handleSaveSettings}
-                    onClose={() => setAdminOpen(false)}
-                />
-            )}
         </div>
     );
 }

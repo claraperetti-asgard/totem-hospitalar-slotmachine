@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate, NavLink } from 'react-router-dom';
 import LogoHospitalar from '../assets/logo-hospitalar.png';
-import { ArrowLeft, X, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, X, Eye, EyeOff, Settings } from 'lucide-react';
 import { PatternFormat } from 'react-number-format';
 import KeyboardReact from 'react-simple-keyboard';
 import "react-simple-keyboard/build/css/index.css";
@@ -167,7 +167,7 @@ export default function Formulario() {
             });
 
             if (response.ok) {
-                navigate('/slot-machine');
+                navigate('/roleta');
                 return;
             }
 
@@ -185,7 +185,7 @@ export default function Formulario() {
     }
 
     return (
-        <div className="relative flex flex-col items-center justify-start min-h-screen gap-10 pb-32 pt-10 w-full mt-5 bg-white p-6">
+        <div className="relative flex flex-col items-center justify-start min-h-screen gap-10 pb-32 pt-10 w-full bg-white p-6">
             <div className='flex justify-between items-center w-full max-w-6xl z-20'>
                 <NavLink to={'/'} className="p-4 bg-white rounded-full shadow-md">
                     <ArrowLeft size={60} color='#0262b0' />
@@ -285,9 +285,10 @@ export default function Formulario() {
             <button
                 type="button"
                 onClick={openLogin}
-                className="absolute bottom-10 right-10 px-8 py-3 bg-white  text-black text-xl font-bold rounded-full shadow-2xl"
+                aria-label="Acesso Admin"
+                className="absolute bottom-6 right-6 p-3 bg-white border border-black rounded-full"
             >
-                Acesso Admin
+                <Settings size={28} color="#000000" strokeWidth={1.75} />
             </button>
 
             {/* ---------- MODAL DE LOGIN ---------- */}
